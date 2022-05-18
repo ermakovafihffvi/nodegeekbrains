@@ -1,0 +1,22 @@
+{
+  "name": "nodegeekbrains",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ermakovafihffvi/nodegeekbrains.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ermakovafihffvi/nodegeekbrains/issues"
+  },
+  "homepage": "https://github.com/ermakovafihffvi/nodegeekbrains#readme",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
