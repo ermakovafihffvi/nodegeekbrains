@@ -1,60 +1,43 @@
+//const { time } = require("console");
 const { green, yellow, red } = require("colors/safe");
+const EventEmitter = require("events");
 
-const isPrime = (number) => {
-    if (number < 2) return false;
+const eventEmitter = new EventEmitter();
 
-    for (let i = 2; i <= number / 2; i++) {
-        if (number % i === 0) return false;
+const handler = (time, index) => {
+    let now = new Date();
+    let nowUTC = now.getTime();
+    let diff = time - nowUTC;
+    if(diff < 0){ 
+        console.log(green("Таймер" + index + " закончился"));   
+        return;
+    } else {
+        console.log("Для таймера" + index + " осталось: " + diff + " секунд");
+        setTimeout(handler, 1000, time, index);
     }
-
-    return true;
 };
 
-let checked = (var1 = null, var2 = null) => {
-    if (var1 > var2 || 
-        var1 === null || var2 === null || 
-        var1 === undefined || var2 === undefined || 
-        typeof(var1) === "string" || typeof(var2) === "string"
-    ){
-        return false;
-    } else {
-        return true;
+function convertTime(stringTime){
+    try {
+        let timeArr = stringTime.split("-");
+        let dateTime = new Date(Math.round(timeArr[4]), Math.round(timeArr[3]) - 1, Math.round(timeArr[2]), Math.round(timeArr[1]), Math.round(timeArr[0]));
+        let now = new Date();
+        if (isNaN(dateTime) 
+            || timeArr[3] > 11 || timeArr[2] > 31 || timeArr[1] > 23 || timeArr[0] > 60
+            || timeArr[3] < 0 || timeArr[2] < 1 || timeArr[1] < 0 || timeArr[0] < 0
+            || dateTime.getTime() < now.getTime()
+        ) {
+            throw new Error();
+        }
+        return dateTime.getTime();
+    } catch(e) {
+        console.log(red("ошибка входных данных"));
+        throw "stop";
     }
 }
 
-function myFunc(fromNumber, toNumber) {
-    if (checked(fromNumber, toNumber)) {
-        let count = 1;
-        let primeArr = [];
-
-        for (let number = from; number <= to; number++) {
-            let colorer = green;
-
-            if (isPrime(number)) {
-                if (count % 2 === 0) {
-                    colorer = yellow;
-                    count++;
-                } else if (count % 3 === 0) {
-                    colorer = red;
-                    count = 1;
-                } else {
-                    count++;
-                }
-
-                console.log(colorer(number));
-                primeArr.push(colorer(number));
-            }
-        }
-        if (primeArr.length == 0) {
-            console.log(red("не нашлось простых чисел в указанном диапазоне"));
-        }
-    } else {
-        console.log(red("что-то не то с входными данными"));
-    }
+for(let i = 2; i < process.argv.length; i++){
+    let utcTime = convertTime(process.argv[i]);
+    eventEmitter.on("timer" + i, handler);
+    eventEmitter.emit("timer" + i, utcTime, i);
 }
-
-
-const from = process.argv[2];
-const to = process.argv[3];
-
-myFunc(from, to);
