@@ -13,7 +13,7 @@ ipArr.forEach(element => {
       let str = chunk.toString();
       let arr = str.split("\n");
       let transformedChunk = "";
-      let regexp = new RegExp(element, "gm")
+      let regexp = new RegExp(element, "gm");
       for(let i = 0; i < arr.length; i++){
           if(arr[i].match(regexp)){
             transformedChunk = arr[i] + "\n";
