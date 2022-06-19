@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "promise": "node promise.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,12 @@
   },
   "homepage": "https://github.com/ermakovafihffvi/nodegeekbrains#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^8.2.4",
+    "path": "^0.12.7",
+    "yargs": "^17.5.1"
+  },
+  "bin": {
+    "reader": "index.js"
   }
 }
